@@ -836,7 +836,8 @@ impl Gfx {
         );
         self.content_dirty = false;
         self.queue.submit(std::iter::once(enc.finish()));
-        frame.present();
+        self.window.pre_present_notify();
+        self.queue.present(frame);
         animating || self.ui.light_auto
     }
 }
