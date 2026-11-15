@@ -1,0 +1,40 @@
+[package]
+name = "liquid-rust-android"
+version = "0.1.0"
+edition = "2021"
+description = "Native Android demo for liquid-rust (NativeActivity + winit + wgpu)"
+publish = false
+
+
+[lib]
+crate-type = ["cdylib"]
+path = "src/main.rs"
+
+[dependencies]
+liquid-rust = { git = "https://github.com/al1h3n/liquid-rust" }
+wgpu = "30.0.1"
+winit = { version = "0.30.13", default-features = false, features = ["android-native-activity", "rwh_06"] }
+image = { version = "0.25.10", default-features = false, features = ["jpeg"] }
+pollster = "1.0.1"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
+panic = "abort"
+
+# ───────────── cargo-apk configuration ─────────────
+[package.metadata.android]
+package = "com.al1h3n.liquidrust"
+apk_name = "LiquidRust"
+build_targets = ["aarch64-linux-android"]
+
+[package.metadata.android.sdk]
+min_sdk_version = 26
+target_sdk_version = 34
+
+[package.metadata.android.application]
+label = "Liquid Rust"
+
+[package.metadata.android.application.activity]
+orientation = "portrait"
